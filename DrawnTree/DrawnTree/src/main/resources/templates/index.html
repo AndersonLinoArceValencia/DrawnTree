@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Árbol Binario</title>
+  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+  <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+  <h1>Árbol Binario - Simulación</h1>
+<button onclick="location.href='/btree'">Ir al Árbol B</button>
+  <input type="number" id="valor" placeholder="Valor">
+  <button onclick="insertar()">Insertar</button>
+  <button onclick="eliminar()">Eliminar</button>
+  <button onclick="buscar()">Buscar</button>
+ <button onclick="vaciar()">Vaciar árbol</button>
+  <div id="network"></div>
+   <script src="/js/arbol.js"></script>
+</body>
+</html>
