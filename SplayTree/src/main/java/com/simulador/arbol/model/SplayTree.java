@@ -1,3 +1,5 @@
+package com.simulador.arbol.model;
+
 public class SplayTree {
     private SplayTreeNode root;
 

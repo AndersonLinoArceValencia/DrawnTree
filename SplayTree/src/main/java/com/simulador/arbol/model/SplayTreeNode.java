@@ -1,3 +1,5 @@
+package com.simulador.arbol.model;
+
 public class SplayTreeNode {
     int key;
     SplayTreeNode left, right, parent;
