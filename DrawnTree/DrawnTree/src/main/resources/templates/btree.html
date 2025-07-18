@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Árbol B</title>
+  <link rel="stylesheet" href="/css/btree.css">
+</head>
+<body>
+  <h1>Visualización del Árbol B</h1>
+
+  <div>
+    <input type="number" id="valor" placeholder="Valor a insertar/eliminar">
+    <button onclick="insertar()">Insertar</button>
+    <button onclick="eliminar()">Eliminar</button>
+    <button onclick="vaciar()">Vaciar</button>
+  </div>
+<canvas id="canvas" width="1000" height="600"></canvas>
+  
+
+  <script src="/js/arbol_b.js"></script>
+</body>
+</html>
