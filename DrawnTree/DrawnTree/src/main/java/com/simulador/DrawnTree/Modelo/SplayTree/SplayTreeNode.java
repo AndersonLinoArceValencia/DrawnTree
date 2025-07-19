@@ -1,11 +1,12 @@
 package com.simulador.DrawnTree.Modelo.SplayTree;
 
 public class SplayTreeNode {
-    int key;
-    SplayTreeNode left, right, parent;
-
-    public SplayTreeNode(int key) {
-        this.key = key;
-        this.left = this.right = this.parent = null;
+           SplayTreeNode left, right, parent;
+ int key;
+        public SplayTreeNode(int key) {
+            this.key = key;
+            this.left = null;
+            this.right = null;
+            this.parent = null;
+        }
     }
-}

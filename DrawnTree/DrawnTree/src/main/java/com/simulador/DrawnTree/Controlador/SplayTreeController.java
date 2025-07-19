@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simulador.DrawnTree.Modelo.Arbol_B.BTree;
+import com.simulador.DrawnTree.Modelo.SplayTree.Splaytree;
 
 @RestController
-@RequestMapping("/api/btree")
+@RequestMapping("/api/splaytree")
 @CrossOrigin(origins = "*")
-public class BTreeController {
+public class SplayTreeController {
 
-    private final BTree btree = new BTree(3); // Árbol B de grado 3
+    private final Splaytree splayTree = new Splaytree();
 
     @PostMapping("/insertar")
     public ResponseEntity<?> insertar(@RequestBody Map<String, Integer> request) {
@@ -33,12 +33,11 @@ public class BTreeController {
                 ));
             }
             
-            btree.insert(valor);
+            splayTree.insert(valor);
             return ResponseEntity.ok(Map.of(
                 "status", "success",
                 "message", "Valor insertado correctamente",
-                "tree", btree.toMap(),
-                "grado", btree.getDegree()
+                "raiz", splayTree.getRootKey()
             ));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -59,59 +58,11 @@ public class BTreeController {
                 ));
             }
             
-            boolean eliminado = btree.delete(valor);
-            if (!eliminado) {
-                return ResponseEntity.ok(Map.of(
-                    "status", "warning",
-                    "message", "El valor no existe en el árbol",
-                    "tree", btree.toMap()
-                ));
-            }
-            
+            splayTree.delete(valor);
             return ResponseEntity.ok(Map.of(
                 "status", "success",
                 "message", "Valor eliminado correctamente",
-                "tree", btree.toMap(),
-                "grado", btree.getDegree()
-            ));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(
-                    "status", "error",
-                    "message", e.getMessage()
-                ));
-        }
-    }
-
-    @GetMapping("/listar")
-    public ResponseEntity<?> listar() {
-        try {
-            Map<String, Object> treeData = btree.toMap();
-            return ResponseEntity.ok(Map.of(
-                "status", "success",
-                "tree", treeData,
-                "grado", btree.getDegree(),
-                "size", btree.size(),
-                "height", btree.height()
-            ));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(
-                    "status", "error",
-                    "message", e.getMessage()
-                ));
-        }
-    }
-
-    @DeleteMapping("/vaciar")
-    public ResponseEntity<?> vaciarArbol() {
-        try {
-            btree.clear();
-            return ResponseEntity.ok(Map.of(
-                "status", "success",
-                "message", "Árbol vaciado correctamente",
-                "tree", btree.toMap(),
-                "grado", btree.getDegree()
+                "raiz", splayTree.getRootKey()
             ));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -132,14 +83,12 @@ public class BTreeController {
                 ));
             }
             
-            boolean encontrado = btree.search(valor);
-            Map<String, Object> treeData = btree.toMap();
-            
+            boolean encontrado = splayTree.search(valor) != null;
             return ResponseEntity.ok(Map.of(
                 "status", "success",
                 "encontrado", encontrado,
-                "tree", treeData,
-                "valorBuscado", valor
+                "raiz", splayTree.getRootKey(),
+                "message", encontrado ? "Valor encontrado" : "Valor no encontrado"
             ));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -149,4 +98,55 @@ public class BTreeController {
                 ));
         }
     }
+
+    @GetMapping("/raiz")
+    public ResponseEntity<?> obtenerRaiz() {
+        try {
+            return ResponseEntity.ok(Map.of(
+                "status", "success",
+                "raiz", splayTree.getRootKey()
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of(
+                    "status", "error",
+                    "message", e.getMessage()
+                ));
+        }
+    }
+
+@DeleteMapping("/vaciar")
+public ResponseEntity<?> vaciarArbol() {
+    try {
+        splayTree.clear(); // Asegúrate de que este método existe en tu clase Splaytree
+        return ResponseEntity.ok(Map.of(
+            "status", "success",
+            "message", "Árbol vaciado correctamente",
+            "arbol", splayTree.toMap() // Devuelve la estructura vacía
+        ));
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(Map.of(
+                "status", "error",
+                "message", e.getMessage()
+            ));
+    }
+}
+
+    @GetMapping("/visualizar")
+public ResponseEntity<?> visualizarArbol() {
+    try {
+        Map<String, Object> estructura = splayTree.toMap(); // Debe incluir la estructura completa
+        return ResponseEntity.ok(Map.of(
+            "status", "success",
+            "arbol", estructura
+        ));
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(Map.of(
+                "status", "error",
+                "message", e.getMessage()
+            ));
+    }
+}
 }

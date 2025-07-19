@@ -1,7 +1,11 @@
 package com.simulador.DrawnTree.Modelo.SplayTree;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Splaytree {
     private SplayTreeNode root;
+
 
     // Rotación a la izquierda (para splaying)
     private void leftRotate(SplayTreeNode x) {
@@ -112,6 +116,7 @@ public class Splaytree {
         if (v != null) v.parent = u.parent;
     }
 
+    // Imprimir el árbol (para depuración)
     public void printTree() {
         printTree(root, 0);
     }
@@ -124,8 +129,60 @@ public class Splaytree {
         printTree(node.left, indent + 4);
     }
 
-    
+    // Obtener la clave de la raíz
     public int getRootKey() {
-        return root != null ? root.key : -1;  // Retorna -1 si el árbol está vacío.
+        return root != null ? root.key : -1;  // Retorna -1 si el árbol está vacío
+    }
+
+    // Vaciar el árbol
+    public void clear() {
+        this.root = null;
+    }
+
+    // Convertir el árbol a un mapa para serialización
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        if (root != null) {
+            map.put("root", nodeToMap(root));
+            map.put("rootKey", root.key);
+        } else {
+            map.put("rootKey", -1);
+        }
+        return map;
+    }
+
+    // Convertir un nodo y sus subárboles a mapa
+    private Map<String, Object> nodeToMap(SplayTreeNode node) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", node.key);
+        
+        if (node.left != null) {
+            map.put("left", nodeToMap(node.left));
+        }
+        
+        if (node.right != null) {
+            map.put("right", nodeToMap(node.right));
+        }
+        
+        return map;
+    }
+
+    // Método adicional para obtener información del árbol
+    public Map<String, Object> getTreeInfo() {
+        Map<String, Object> info = new HashMap<>();
+        info.put("rootKey", getRootKey());
+        info.put("size", calculateSize(root));
+        info.put("height", calculateHeight(root));
+        return info;
+    }
+
+    private int calculateSize(SplayTreeNode node) {
+        if (node == null) return 0;
+        return 1 + calculateSize(node.left) + calculateSize(node.right);
+    }
+
+    private int calculateHeight(SplayTreeNode node) {
+        if (node == null) return -1;
+        return 1 + Math.max(calculateHeight(node.left), calculateHeight(node.right));
     }
 }

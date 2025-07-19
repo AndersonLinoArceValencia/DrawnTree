@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de Árbol B</title>
+    <title>Visualizador de Splay Tree</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -50,7 +50,7 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
-        .node-highlight {
+        .highlight-node {
             background-color: #f6c23e !important;
             border-color: #dda20a !important;
         }
@@ -58,23 +58,11 @@
             background-color: #1cc88a !important;
             border-color: #17a673 !important;
         }
-        .input-group {
-            flex-wrap: nowrap;
-        }
-        @media (max-width: 768px) {
-            .input-group {
-                flex-wrap: wrap;
-            }
-            .input-group .btn {
-                margin-top: 5px;
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Visualizador de Árbol B</h1>
+        <h1 class="text-center my-4">Visualizador de Splay Tree</h1>
         
         <div class="card">
             <div class="card-header">
@@ -84,15 +72,15 @@
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input type="number" id="valor" class="form-control" placeholder="Ingrese un valor" aria-label="Valor para operación">
-                            <button id="insert-btn" class="btn btn-primary" type="button">Insertar</button>
-                            <button id="delete-btn" class="btn btn-danger" type="button">Eliminar</button>
-                            <button id="search-btn" class="btn btn-success" type="button">Buscar</button>
+                            <input type="number" id="valor" class="form-control" placeholder="Ingrese un valor">
+                            <button class="btn btn-primary" type="button" onclick="insertar()">Insertar</button>
+                            <button class="btn btn-danger" type="button" onclick="eliminar()">Eliminar</button>
+                            <button class="btn btn-success" type="button" onclick="buscar()">Buscar</button>
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                        <button id="clear-btn" class="btn btn-outline-secondary me-2" type="button">Vaciar Árbol</button>
-                        <button id="reload-btn" class="btn btn-outline-secondary" type="button">Recargar</button>
+                        <button class="btn btn-outline-secondary me-2" onclick="vaciarArbol()">Vaciar Árbol</button>
+                        <button class="btn btn-outline-secondary" onclick="cargarArbol()">Recargar</button>
                     </div>
                 </div>
                 
@@ -124,13 +112,13 @@
                         <p><strong>Tamaño del árbol:</strong> <span id="tamano-arbol">0</span></p>
                     </div>
                     <div class="col-md-4">
-                        <p><strong>Grado del árbol:</strong> <span id="grado-arbol">3</span></p>
+                        <p><strong>Altura del árbol:</strong> <span id="altura-arbol">0</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="/js/btree-visualizer.js"></script>
+    <script src="/js/splay-tree-visualizer.js"></script>
 </body>
 </html>

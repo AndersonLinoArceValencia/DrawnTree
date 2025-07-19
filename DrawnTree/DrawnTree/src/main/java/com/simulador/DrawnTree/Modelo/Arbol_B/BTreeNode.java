@@ -16,7 +16,9 @@ List<Integer> keys;
         this.next = null;
 
     }
-
+  public boolean isLeaf() {
+            return leaf;
+        }
+    }
    
 
-}

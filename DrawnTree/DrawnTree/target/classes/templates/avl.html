@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Árbol AVL</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    input, button {
+      margin: 5px;
+      padding: 5px;
+    }
+    svg {
+      border: 1px solid #ccc;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulador de Árbol AVL</h1>
+  <input type="number" id="valor" placeholder="Valor" />
+  <button onclick="insertar()">Insertar</button>
+  <button onclick="eliminar()">Eliminar</button>
+  <button onclick="reiniciar()">Reiniciar Árbol</button>
+
+  <div id="arbol-container">
+    <svg id="arbol" width="1000" height="600"></svg>
+  </div>
+
+  <script src="/js/avl.js"></script>
+</body>
+</html>

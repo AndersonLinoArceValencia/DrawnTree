@@ -69,4 +69,5 @@ public Map<String, Object> vaciar() {
     return Map.of("nodos", arbol.toLista());
 }
 
+
 }

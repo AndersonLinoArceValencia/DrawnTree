@@ -1,5 +1,8 @@
 package com.simulador.DrawnTree.Modelo.ArbolAVL;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AVLTree {
     private AVLNode root;
 
@@ -190,6 +193,20 @@ public class AVLTree {
 
     // Método para reiniciar el árbol
     public void reset() {
-        this.root = null;
+        this.root = null; // Reinicia la raíz del árbol AVL
     }
+
+    public Map<String, Object> toMap() {
+  return nodeToMap(this.root);
+}
+
+public Map<String, Object> nodeToMap(AVLNode node) {
+  if (node == null) return null;
+
+  Map<String, Object> map = new HashMap<>();
+  map.put("value", node.value);        // antes: "valor"
+  map.put("left", nodeToMap(node.left));  // antes: "izquierdo"
+  map.put("right", nodeToMap(node.right)); // antes: "derecho"
+  return map;
+}
 }
