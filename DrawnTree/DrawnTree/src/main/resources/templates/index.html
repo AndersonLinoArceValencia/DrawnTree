@@ -1,22 +1,160 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Simulador de Árbol Binario</title>
-  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
-  <link rel="stylesheet" href="/styles/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Estructuras de Datos</title>
+    <style>
+        /* Reset básico y box-sizing para consistencia */
+        html {
+            box-sizing: border-box;
+        }
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        /* Estilos generales del cuerpo */
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            line-height: 1.5;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #1f2937; /* text-gray-800 */
+        }
+
+        /* Contenedor principal de la página */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem; /* py-12 (48px) px-4 (16px) */
+        }
+
+        /* Estilos del título principal */
+        .title {
+            font-size: 2.25rem; /* text-4xl (36px) */
+            font-weight: 700; /* font-bold */
+            text-align: center;
+            margin-bottom: 2.5rem; /* mb-10 (40px) */
+            color: #1f2937; /* text-gray-800 */
+        }
+
+        /* Estilos de la descripción */
+        .description {
+            font-size: 1.125rem; /* text-lg (18px) */
+            text-align: center;
+            color: #4b5563; /* text-gray-600 */
+            margin-bottom: 3rem; /* mb-12 (48px) */
+            max-width: 42rem; /* max-w-2xl (672px) */
+        }
+
+        /* Contenedor de la cuadrícula de tarjetas */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr; /* grid-cols-1 */
+            gap: 1.5rem; /* gap-6 (24px) */
+            width: 100%; /* w-full */
+            max-width: 56rem; /* max-w-4xl (896px) */
+            margin-left: auto; /* Centrar el contenedor de la cuadrícula */
+            margin-right: auto; /* Centrar el contenedor de la cuadrícula */
+        }
+
+        /* Media queries para responsividad (md:grid-cols-2) */
+        @media (min-width: 768px) { /* md breakpoint */
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+            }
+        }
+
+        /* Estilos de la tarjeta (Card) */
+        .card {
+            background-color: #ffffff; /* bg-white */
+            border-radius: 0.5rem; /* rounded-lg (8px) */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            padding: 1.5rem; /* p-6 (24px) - común en shadcn/ui Card */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Estilos del título de la tarjeta */
+        .card-title {
+            font-size: 1.5rem; /* text-2xl (24px) */
+            font-weight: 600; /* font-semibold */
+            margin-bottom: 1rem; /* mb-4 (16px) */
+            color: #1f2937; /* Asegurar color de texto consistente */
+        }
+
+        /* Estilos de la descripción de la tarjeta */
+        .card-description {
+            color: #4b5563; /* text-gray-600 */
+            margin-bottom: 1rem; /* mb-4 (16px) */
+        }
+
+        /* Estilos del botón */
+        .button {
+            display: block; /* w-full */
+            width: 100%;
+            padding: 0.5rem 1rem; /* py-2 (8px) px-4 (16px) */
+            background-color: black; /* bg-blue-600 */
+            color: #ffffff; /* text-white */
+            font-weight: 600; /* font-semibold */
+            border-radius: 0.375rem; /* rounded-md (6px) */
+            text-align: center;
+            text-decoration: none; /* Eliminar subrayado del enlace */
+            transition: background-color 0.2s ease-in-out; /* transición para hover */
+            border: none; /* Eliminar borde por defecto del botón */
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d4ed8; /* hover:bg-blue-700 */
+        }
+    </style>
 </head>
 <body>
-  <h1>Árbol Binario - Simulación</h1>
-<button onclick="location.href='/btree'">Ir al Árbol B</button>
-<button onclick="location.href='/avl'">Ir al ÁrboAVL</button>
-<button onclick="location.href='/Splay-Tree'">Ir al SplayTree</button>
-  <input type="number" id="valor" placeholder="Valor">
-  <button onclick="insertar()">Insertar</button>
-  <button onclick="eliminar()">Eliminar</button>
-  <button onclick="buscar()">Buscar</button>
- <button onclick="vaciar()">Vaciar árbol</button>
-  <div id="network"></div>
-   <script src="/js/arbol.js"></script>
+    <main class="main-container">
+        <h1 class="title">Simulador de Estructuras de Datos</h1>
+        <p class="description">
+            Selecciona un tipo de árbol para explorar sus operaciones de inserción y eliminación, y visualiza su
+            comportamiento de forma interactiva.
+        </p>
+
+        <div class="grid-container">
+            <div class="card">
+                <div>
+                    <h2 class="card-title">Árbol Binario de Búsqueda</h2>
+                    <p class="card-description">Simulación de un BST básico.</p>
+                </div>
+                <a href="binarytree" class="button">Ir al Simulador</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h2 class="card-title">Árbol AVL (Balanceado)</h2>
+                    <p class="card-description">Simulación de un árbol binario de búsqueda auto-balanceado.</p>
+                </div>
+                <a href="avl" class="button">Ir al Simulador</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h2 class="card-title">Splay Tree</h2>
+                    <p class="card-description">Simulación de un árbol binario de búsqueda auto-ajustable.</p>
+                </div>
+                <a href="Splay-Tree" class="button">Ir al Simulador</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h2 class="card-title">Árbol B</h2>
+                    <p class="card-description">Simulación de un árbol de búsqueda multi-rama.</p>
+                </div>
+                <a href="btree" class="button">Ir al Simulador</a>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
