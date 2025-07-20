@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.simulador.DrawnTree.Modelo.ArbolAVL.AVLNode;
-import com.simulador.DrawnTree.Modelo.ArbolAVL.AVLTree;
+import com.simulador.DrawnTree.Modelo.AVLTree.AVLNode;
+import com.simulador.DrawnTree.Modelo.AVLTree.AVLTree;
 
 @RestController
 @RequestMapping("/avl")
@@ -42,6 +42,14 @@ public ResponseEntity<Object> obtenerEstructura() {
   }
   return ResponseEntity.ok(arbol.nodeToMap(nodo));
 }
+@GetMapping("/buscar")
+public ResponseEntity<Map<String, Object>> buscar(@RequestParam int valor) {
+    boolean encontrado = arbol.buscar(valor);
+    Map<String, Object> response = new HashMap<>();
+    response.put("encontrado", encontrado);
+    return ResponseEntity.ok(response);
+}
+
   // Reiniciar el árbol (eliminar todos los nodos)
 @PostMapping("/reiniciar")
 public ResponseEntity<Map<String, String>> reiniciarArbol() {

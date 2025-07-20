@@ -200,6 +200,13 @@ public class AVLTree {
   return nodeToMap(this.root);
 }
 
+private boolean buscarRecursivo(AVLNode node, int value) {
+    if (node == null) return false;
+    if (value == node.value) return true;
+    if (value < node.value) return buscarRecursivo(node.left, value);
+    return buscarRecursivo(node.right, value);
+}
+
 public Map<String, Object> nodeToMap(AVLNode node) {
   if (node == null) return null;
 
