@@ -1,6 +1,7 @@
 package com.simulador.DrawnTree.Controlador;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -44,10 +45,18 @@ public ResponseEntity<Object> obtenerEstructura() {
 }
 @GetMapping("/buscar")
 public ResponseEntity<Map<String, Object>> buscar(@RequestParam int valor) {
-    boolean encontrado = arbol.buscar(valor);
+    List<Integer> camino = arbol.buscarConRuta(valor);
+    boolean encontrado = !camino.isEmpty() && camino.get(camino.size() - 1) == valor;
+
     Map<String, Object> response = new HashMap<>();
     response.put("encontrado", encontrado);
+    response.put("camino", camino);
     return ResponseEntity.ok(response);
+}
+@GetMapping("/buscarRuta")
+public ResponseEntity<List<Integer>> buscarRuta(@RequestParam int valor) {
+    List<Integer> ruta = arbol.buscarConRuta(valor);
+    return ResponseEntity.ok(ruta);
 }
 
   // Reiniciar el árbol (eliminar todos los nodos)

@@ -1,6 +1,8 @@
 package com.simulador.DrawnTree.Modelo.ArbolAVL;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AVLTree {
@@ -199,6 +201,9 @@ public class AVLTree {
     public Map<String, Object> toMap() {
   return nodeToMap(this.root);
 }
+public boolean buscar(int value) {
+    return buscarRecursivo(root, value);
+}
 
 private boolean buscarRecursivo(AVLNode node, int value) {
     if (node == null) return false;
@@ -206,7 +211,6 @@ private boolean buscarRecursivo(AVLNode node, int value) {
     if (value < node.value) return buscarRecursivo(node.left, value);
     return buscarRecursivo(node.right, value);
 }
-
 public Map<String, Object> nodeToMap(AVLNode node) {
   if (node == null) return null;
 
@@ -216,4 +220,24 @@ public Map<String, Object> nodeToMap(AVLNode node) {
   map.put("right", nodeToMap(node.right)); // antes: "derecho"
   return map;
 }
+public List<Integer> buscarConRuta(int valor) {
+    List<Integer> ruta = new ArrayList<>();
+    AVLNode actual = root;
+
+    while (actual != null) {
+        ruta.add(actual.value);
+
+        if (valor == actual.value) {
+            return ruta;
+        } else if (valor < actual.value) {
+            actual = actual.left;
+        } else {
+            actual = actual.right;
+        }
+    }
+
+    ruta.clear(); // Si no se encontró el nodo
+    return ruta;
+}
+
 }
