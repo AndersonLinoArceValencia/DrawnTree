@@ -120,5 +120,22 @@ public Map<String, Object> buscarConCamino(int valor) {
   return resultado;
 }
 
+public int tamano() {
+    return contarNodos(raiz);
+}
 
+private int contarNodos(Nodo nodo) {
+    if (nodo == null) return 0;
+    return 1 + contarNodos(nodo.izq) + contarNodos(nodo.der);
+}
+public int altura() {
+    return calcularAltura(raiz);
+}
+
+private int calcularAltura(Nodo nodo) {
+    if (nodo == null) return -1; // -1 si el árbol está vacío, o 0 si se cuenta la raíz como altura 0
+    int izquierda = calcularAltura(nodo.izq);
+    int derecha = calcularAltura(nodo.der);
+    return 1 + Math.max(izquierda, derecha);
+}
 }

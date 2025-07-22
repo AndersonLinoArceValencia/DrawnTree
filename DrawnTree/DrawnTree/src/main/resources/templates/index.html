@@ -8,6 +8,7 @@
         /* Reset básico y box-sizing para consistencia */
         html {
             box-sizing: border-box;
+            height: 100%; /* Asegura que el html ocupe toda la altura del viewport */
         }
         *, *::before, *::after {
             box-sizing: inherit;
@@ -16,20 +17,31 @@
         /* Estilos generales del cuerpo */
         body {
             margin: 0;
+            padding: 0; /* Asegura que no haya padding por defecto */
+            height: 100%; /* Asegura que el body ocupe toda la altura del viewport */
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             line-height: 1.5;
             background-color: #f3f4f6; /* bg-gray-100 */
             color: #1f2937; /* text-gray-800 */
+
+            /* Centrar el contenido del body usando Flexbox */
+            display: flex;
+            flex-direction: column; /* Para que los elementos se apilen verticalmente */
+            align-items: center; /* Centra horizontalmente los elementos hijos */
+            justify-content: center; /* Centra verticalmente los elementos hijos */
+            overflow-y: auto; /* Permite el scroll vertical si el contenido excede la altura del viewport */
+            overflow-x: hidden; /* Previene el scroll horizontal */
         }
 
         /* Contenedor principal de la página */
         .main-container {
+            width: 100%; /* w-full */
+            max-width: 56rem; /* max-w-4xl (896px) - el mismo que el grid-container */
+            padding: 3rem 1rem; /* py-12 (48px) px-4 (16px) */
             display: flex;
-            min-height: 100vh;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 3rem 1rem; /* py-12 (48px) px-4 (16px) */
+            /* justify-content: center; no es necesario aquí si el body ya lo hace para su único hijo */
         }
 
         /* Estilos del título principal */
@@ -56,9 +68,6 @@
             grid-template-columns: 1fr; /* grid-cols-1 */
             gap: 1.5rem; /* gap-6 (24px) */
             width: 100%; /* w-full */
-            max-width: 56rem; /* max-w-4xl (896px) */
-            margin-left: auto; /* Centrar el contenedor de la cuadrícula */
-            margin-right: auto; /* Centrar el contenedor de la cuadrícula */
         }
 
         /* Media queries para responsividad (md:grid-cols-2) */
@@ -98,7 +107,7 @@
             display: block; /* w-full */
             width: 100%;
             padding: 0.5rem 1rem; /* py-2 (8px) px-4 (16px) */
-            background-color: black; /* bg-blue-600 */
+            background-color: #000000; /* bg-black */
             color: #ffffff; /* text-white */
             font-weight: 600; /* font-semibold */
             border-radius: 0.375rem; /* rounded-md (6px) */
@@ -110,7 +119,7 @@
         }
 
         .button:hover {
-            background-color: #1d4ed8; /* hover:bg-blue-700 */
+            background-color: #4e73df; /* hover:bg-gray-800 */
         }
     </style>
 </head>

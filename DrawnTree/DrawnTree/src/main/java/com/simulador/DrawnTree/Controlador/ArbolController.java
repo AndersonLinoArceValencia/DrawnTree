@@ -69,5 +69,12 @@ public Map<String, Object> vaciar() {
     return Map.of("nodos", arbol.toLista());
 }
 
-
+@GetMapping("/info")
+public Map<String, Object> info() {
+    Map<String, Object> info = new HashMap<>();
+    info.put("altura", arbol.altura());
+    info.put("tamano", arbol.tamano());
+    info.put("raiz", arbol.raiz != null ? arbol.raiz.valor : null);
+    return info;
+}
 }

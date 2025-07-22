@@ -82,14 +82,12 @@ function cargarArbol(resaltar = null, camino = []) {
                     length: 25 // <-- Reduce este valor para flechas más cortas
                 }
             };
-
-
-
             if (network) {
                 network.setData(datos);
             } else {
                 network = new vis.Network(container, datos, opciones);
             }
+            actualizarInformacion();
         })
         .catch(err => {
 
@@ -134,5 +132,18 @@ function vaciar() {
         .catch(err => alert("Error al vaciar: " + err));
 }
 
-
+function recargarVista() {
+    if (network) {
+        network.fit({ animation: true });
+    }
+}
+function actualizarInformacion() {
+    fetch("/api/arbol/info")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("raiz-actual").textContent = data.raiz !== null ? data.raiz : "Vacío";
+            document.getElementById("tamano-arbol").textContent = data.tamano;
+            document.getElementById("altura-arbol").textContent = data.altura;
+        });
+}
 cargarArbol();
